@@ -118,7 +118,7 @@ export default function GameRoom() {
           <Modal.Title>Hasil Game</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          <h5 className="text-center">{result?.result}</h5>
+          <h5 className="text-center p-4" style={{fontSize:'60px', color:'ForestGreen'}}>{result?.result}</h5>
           <p className="text-center">Gerakan Anda: {result?.move1}</p>
           <p className="text-center">Gerakan Lawan: {result?.move2}</p>
         </Modal.Body>
