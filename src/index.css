@@ -1,4 +1,4 @@
-:root {
+/* :root {
   font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
   line-height: 1.5;
   font-weight: 400;
@@ -65,4 +65,31 @@ button:focus-visible {
   button {
     background-color: #f9f9f9;
   }
+} */
+
+.form-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh; /* Full viewport height */
+  background-color: #f8f9fa; /* Light background color */
+  padding: 20px;
+}
+
+.login-form {
+  background-color: white; /* White background for the form */
+  padding: 30px; /* Add padding */
+  border-radius: 8px; /* Rounded corners */
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1); /* Shadow effect */
+  width: 100%; /* Full width */
+  max-width: 400px; /* Max width for better appearance */
+}
+
+h2 {
+  margin-bottom: 20px;
+}
+
+.form-control {
+  width: 100%; /* Full width for inputs */
 }
