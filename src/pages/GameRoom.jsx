@@ -1,15 +1,14 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import io from "socket.io-client";
 import { Modal } from "react-bootstrap";
-
-const socket = io("http://localhost:3000");
+import socket from "../socket";
 
 const choices = [
   { name: "rock", emoji: "✊" },
   { name: "paper", emoji: "✋" },
   { name: "scissors", emoji: "✌️" },
 ];
+
 export default function GameRoom() {
   const { roomId } = useParams();
   const username = localStorage.getItem("username");
@@ -20,25 +19,28 @@ export default function GameRoom() {
   const [showModal, setShowModal] = useState(false);
 
   useEffect(() => {
+    socket.connect();
+
     socket.emit("join-room", { roomId, username });
 
-    socket.on("waiting-opponent", () => {
-      setWaiting(true);
-    });
+    const handleWaitingOpponent = () => setWaiting(true);
+    socket.on("waiting-opponent", handleWaitingOpponent);
 
-    socket.on("start-game", () => {
-        console.log("Game started...");
+    const handleStartGame = () => {
       setWaiting(false);
       setGameStarted(true);
-    });
-
-    socket.on("round-result", (data) => {
+    };
+    socket.on("start-game", handleStartGame);
+    const handleRoundResult = (data) => {
       setResult(data);
       setShowModal(true);
-      setTimeout(() => setShowModal(false), 5000);
-    });
+    };
+    socket.on("round-result", handleRoundResult);
 
     return () => {
+      socket.off("waiting-opponent", handleWaitingOpponent);
+      socket.off("start-game", handleStartGame);
+      socket.off("round-result", handleRoundResult);
       socket.disconnect();
     };
   }, [roomId, username]);
@@ -52,17 +54,13 @@ export default function GameRoom() {
 
   const handleCloseModal = () => {
     setShowModal(false);
-    if (result?.result === "Draw") {
-      setMove("");
-      setGameStarted(false);
-      setWaiting(true);
-      socket.emit("join-room", { roomId, username });
-    }
+    setMove(""); 
+    setResult(null); 
   };
 
   if (waiting) {
     return (
-      <div className="container" style={{width:'200vh'}}>
+      <div className="container" style={{ width: "220vh",  maxWidth:'1650px'  }}>
         <div className="container">
           <div className="container d-flex flex-column justify-content-center align-items-center vh-100">
             <h3 className="text-primary">Sedang menunggu lawan ...</h3>
@@ -76,8 +74,8 @@ export default function GameRoom() {
   }
 
   return (
-    <div className="container" style={{width:'200vh'}}>
-      <div className="container vh-100 d-flex justify-content-center align-items-center">
+    <div className="container text-center" style={{ width: "280vh", maxWidth:'1650px' }}>
+      <div className="container vh-120 d-flex justify-content-center align-items-center">
         <div
           className="p-5 text-center"
           style={{
@@ -125,10 +123,7 @@ export default function GameRoom() {
           <p className="text-center">Gerakan Lawan: {result?.move2}</p>
         </Modal.Body>
         <Modal.Footer>
-          <button
-            className="btn btn-secondary"
-            onClick={() => setShowModal(false)}
-          >
+          <button className="btn btn-secondary" onClick={handleCloseModal}>
             Tutup
           </button>
         </Modal.Footer>
