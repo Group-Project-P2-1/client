@@ -75,10 +75,10 @@ export default function GameRoom() {
 
   return (
     <div
-      className="container text-center"
-      style={{ width: "280vh", maxWidth: "1650px" }}
+      className="container text-center d-flex align-items-center"
+      style={{ width: "100vw", height: "80vh" }}
     >
-      <div className="container vh-120 d-flex justify-content-center align-items-center">
+      <div className="container d-flex justify-content-center align-items-center">
         <div
           className="p-5 text-center"
           style={{
