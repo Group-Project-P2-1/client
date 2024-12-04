@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { 
     Button,
@@ -6,12 +6,17 @@ import {
     Row,
     Col
 } from "react-bootstrap";
+import { useRoom } from "../context/RoomContext";
 
 export default function listRoom() {
-    // const { roomId } = useParams();
-    const username = localStorage.getItem("username");
     const navigate = useNavigate();
+    const {setRoomId} = useRoom()
     const [data, setData] = useState([1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]);
+
+    const handleEnterRoom = (id) => {
+        setRoomId(id);
+        navigate(`/gameroom/${id}`)
+    }
 
     return (
         <div
@@ -31,7 +36,7 @@ export default function listRoom() {
 
         <Row className="g-4 mt-4">
             {data.map((el) => (
-                <Col xs={6} sm={4} md={3}>
+                <Col key={el} xs={6} sm={4} md={3}>
                     <Card className="text-center rounded-5" style={{ width: "100%" }}>
                         <Card.Body>
                             <Card.Title>Room {el}</Card.Title>
@@ -57,7 +62,7 @@ export default function listRoom() {
                                 size="sm"
                                 variant="outline-primary"
                                 className="rounded-pill"
-                                onClick={() => navigate(`/gameroom/${el}`)}
+                                onClick={() => handleEnterRoom(el)}
                             >
                                 Enter Room
                             </Button>
