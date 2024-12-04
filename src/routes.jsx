@@ -13,7 +13,7 @@ const router = createBrowserRouter([
     element: <ListRoom />,
   },
   {
-    path: "/gameRoom",
+    path: "/gameroom/:roomId",
     element: <GameRoom />,
   },
 ]);
