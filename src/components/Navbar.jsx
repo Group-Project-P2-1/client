@@ -36,7 +36,7 @@ function NavbarLayout() {
                 align="end"
                 className="justify-content-end"
             >
-                <Dropdown.Item onClick={logout}>Logout</Dropdown.Item>
+                <Dropdown.Item onClick={logout}>Quit Game</Dropdown.Item>
             </DropdownButton>
         </Navbar>
     );
