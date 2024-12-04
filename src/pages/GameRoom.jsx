@@ -72,10 +72,13 @@ export default function GameRoom() {
 
   if (waiting) {
     return (
-      <div className="container" style={{ width: "220vh", maxWidth: "1650px" }}>
+      <div 
+        className="container text-center d-flex align-items-center"
+        style={{ width: "100vw", height: "80vh" }}
+      >
         <div className="container">
           <div className="container d-flex flex-column justify-content-center align-items-center vh-100">
-            <h3 className="text-primary">Sedang menunggu lawan ...</h3>
+            <h3 className="text-primary">Waiting for opponent ...</h3>
             <div className="spinner-border text-primary mt-3" role="status">
               <span className="visually-hidden">Loading...</span>
             </div>
@@ -87,10 +90,10 @@ export default function GameRoom() {
 
   return (
     <div
-      className="container text-center pt-5"
-      style={{ width: "280vh", maxWidth: "1650px" }}
+      className="container text-center d-flex align-items-center"
+      style={{ width: "100vw", height: "80vh" }}
     >
-      <div className="container vh-120 d-flex justify-content-center align-items-center">
+      <div className="container d-flex justify-content-center align-items-center">
         <div
           className="p-5 text-center"
           style={{
@@ -103,11 +106,11 @@ export default function GameRoom() {
         >
           <div className="mb-3">
             <h1 style={{ fontSize: "70px" }}>Room {roomId}</h1>
-            <h2 style={{ color: "Cornsilk" }}>Nama Pemain: {username}</h2>
+            <h2 style={{ color: "Cornsilk" }}>Player Name: {username}</h2>
           </div>
 
           <div className="mt-2 py-3">
-            <h2>Silahkan Pilih Gerakan!</h2>
+            <h2>Choose your move!</h2>
           </div>
           <div
             className="d-flex justify-content-center gap-3 mb-2 mt-2"
@@ -125,14 +128,14 @@ export default function GameRoom() {
             ))}
           </div>
           {gameStarted && !move && (
-            <h3 className="mt-5">Sedang menunggu gerakan...</h3>
+            <h3 className="mt-5">Waiting for your move...</h3>
           )}
         </div>
       </div>
 
       <Modal show={showModal} onHide={handleCloseModal}>
         <Modal.Header closeButton>
-          <Modal.Title>Hasil Game</Modal.Title>
+          <Modal.Title>Game Result</Modal.Title>
         </Modal.Header>
         <Modal.Body>
           {/* <h5 className="text-center">{result?.result}</h5> */}
@@ -151,12 +154,12 @@ export default function GameRoom() {
           >
             {result?.result}
           </h5>
-          <p className="text-center">Gerakan Anda: {result?.move1}</p>
-          <p className="text-center">Gerakan {username}: {result?.move2}</p>
+          <p className="text-center">Your gesture: {result?.move1}</p>
+          <p className="text-center">Gesture {username}: {result?.move2}</p>
         </Modal.Body>
         <Modal.Footer>
           <button className="btn btn-secondary" onClick={handleCloseModal}>
-            Tutup
+            Close
           </button>
         </Modal.Footer>
       </Modal>
