@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { Modal } from "react-bootstrap";
 import socket from "../socket";
+import { useRoom } from "../context/RoomContext";
 
 const choices = [
   { name: "rock", emoji: "✊" },
@@ -10,7 +11,8 @@ const choices = [
 ];
 
 export default function GameRoom() {
-  const { roomId } = useParams();
+  const { roomId: paramRoomId } = useParams();
+  const { roomId, setRoomId } = useRoom();
   const username = localStorage.getItem("username");
   const [move, setMove] = useState("");
   const [result, setResult] = useState(null);
@@ -19,6 +21,14 @@ export default function GameRoom() {
   const [showModal, setShowModal] = useState(false);
 
   useEffect(() => {
+    if (!roomId) {
+      setRoomId(paramRoomId);
+    }
+  }, [paramRoomId, roomId, setRoomId]);
+
+  useEffect(() => {
+    if (!roomId) return;
+
     socket.connect();
 
     socket.emit("join-room", { roomId, username });
@@ -31,12 +41,14 @@ export default function GameRoom() {
       setGameStarted(true);
     };
     socket.on("start-game", handleStartGame);
+
     const handleRoundResult = (data) => {
       setResult(data);
       setShowModal(true);
     };
     socket.on("round-result", handleRoundResult);
     console.log(result);
+
     return () => {
       socket.off("waiting-opponent", handleWaitingOpponent);
       socket.off("start-game", handleStartGame);
@@ -123,14 +135,12 @@ export default function GameRoom() {
           <Modal.Title>Hasil Game</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-
-          <h5 className="text-center">{result?.result}</h5>
-=======
+          {/* <h5 className="text-center">{result?.result}</h5> */}
           <h5
             className="text-center p-4"
             style={{
               fontSize: "60px",
-              color: result?.message[username] === "You win!" ? "black" : "red", // Change color based on result
+              color: result?.message[username] === "You win!" ? "black" : "red",
             }}
           >
             {result?.message[username]}{" "}
@@ -142,7 +152,7 @@ export default function GameRoom() {
             {result?.result}
           </h5>
           <p className="text-center">Gerakan Anda: {result?.move1}</p>
-          <p className="text-center">Gerakan Lawan: {result?.move2}</p>
+          <p className="text-center">Gerakan {username}: {result?.move2}</p>
         </Modal.Body>
         <Modal.Footer>
           <button className="btn btn-secondary" onClick={handleCloseModal}>

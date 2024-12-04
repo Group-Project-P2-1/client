@@ -1,8 +1,5 @@
 import { useState, useEffect } from "react";
-import reactLogo from "./assets/react.svg";
 import 'bootstrap/dist/css/bootstrap.min.css';
-import viteLogo from "/vite.svg";
-import "./App.css";
 import socket from "./socket";
 
 function App() {
