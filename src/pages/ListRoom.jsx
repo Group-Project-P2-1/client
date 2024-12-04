@@ -52,7 +52,7 @@ export default function listRoom() {
                                     size="sm"
                                     variant="success"
                                     className="rounded-pill text-white"
-                                    onClick={() => handleEnterRoom(el))}
+                                    onClick={() => handleEnterRoom(el)}
                                 >
                                     Enter Room
                                 </Button>
