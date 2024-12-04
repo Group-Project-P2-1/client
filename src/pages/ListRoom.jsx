@@ -1,26 +1,17 @@
-import React, { useEffect, useState } from "react";
-import { useParams, Link, useNavigate } from "react-router-dom";
-import io from "socket.io-client";
-import socket from "../socket";
+import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { 
     Button,
     Card,
-    Spinner,
-    Container,
     Row,
     Col
 } from "react-bootstrap";
-
-const socket = io("http://localhost:3000");
-import { Button, Card, Spinner, Container, Row, Col } from "react-bootstrap";
 
 export default function listRoom() {
     // const { roomId } = useParams();
     const username = localStorage.getItem("username");
     const navigate = useNavigate();
-    const [waiting, setWaiting] = useState(false);
     const [data, setData] = useState([1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]);
-
 
     return (
         <div
