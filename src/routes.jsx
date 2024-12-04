@@ -1,5 +1,5 @@
 import { createBrowserRouter } from "react-router-dom";
-import Login from "./assets/pages/login";
+import Login from "./pages/login";
 import GameRoom from "./pages/GameRoom";
 import ListRoom from "./pages/ListRoom";
 
