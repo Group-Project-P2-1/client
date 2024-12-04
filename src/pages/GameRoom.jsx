@@ -60,7 +60,7 @@ export default function GameRoom() {
 
   if (waiting) {
     return (
-      <div className="container" style={{ width: "220vh",  maxWidth:'1650px'  }}>
+      <div className="container" style={{ width: "200vh" }}>
         <div className="container">
           <div className="container d-flex flex-column justify-content-center align-items-center vh-100">
             <h3 className="text-primary">Sedang menunggu lawan ...</h3>
@@ -74,8 +74,8 @@ export default function GameRoom() {
   }
 
   return (
-    <div className="container text-center" style={{ width: "280vh", maxWidth:'1650px' }}>
-      <div className="container vh-120 d-flex justify-content-center align-items-center">
+    <div className="container" style={{ width: "200vh" }}>
+      <div className="container vh-100 d-flex justify-content-center align-items-center">
         <div
           className="p-5 text-center"
           style={{
@@ -118,7 +118,7 @@ export default function GameRoom() {
           <Modal.Title>Hasil Game</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          <h5 className="text-center p-4" style={{fontSize:'60px', color:'ForestGreen'}}>{result?.result}</h5>
+          <h5 className="text-center">{result?.result}</h5>
           <p className="text-center">Gerakan Anda: {result?.move1}</p>
           <p className="text-center">Gerakan Lawan: {result?.move2}</p>
         </Modal.Body>

@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useParams, Link, useNavigate } from "react-router-dom";
 import io from "socket.io-client";
+import socket from "../socket";
 import { 
     Button,
     Card,
