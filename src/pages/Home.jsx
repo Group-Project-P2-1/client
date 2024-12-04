@@ -7,7 +7,7 @@ const Home = () => {
     <div className="home-container">
       <h1>Batu Gunting Kertas</h1>
       <p>Selamat datang di permainan Batu Gunting Kertas! Siap untuk bermain?</p>
-      <Link to="/game">
+      <Link to="/listRoom">
         <button className="start-button">Mulai Permainan</button>
       </Link>
     </div>
