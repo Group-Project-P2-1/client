@@ -36,7 +36,7 @@ export default function GameRoom() {
       setShowModal(true);
     };
     socket.on("round-result", handleRoundResult);
-
+    console.log(result);
     return () => {
       socket.off("waiting-opponent", handleWaitingOpponent);
       socket.off("start-game", handleStartGame);
@@ -54,13 +54,13 @@ export default function GameRoom() {
 
   const handleCloseModal = () => {
     setShowModal(false);
-    setMove(""); 
-    setResult(null); 
+    setMove("");
+    setResult(null);
   };
 
   if (waiting) {
     return (
-      <div className="container" style={{ width: "220vh",  maxWidth:'1650px'  }}>
+      <div className="container" style={{ width: "220vh", maxWidth: "1650px" }}>
         <div className="container">
           <div className="container d-flex flex-column justify-content-center align-items-center vh-100">
             <h3 className="text-primary">Sedang menunggu lawan ...</h3>
@@ -74,7 +74,10 @@ export default function GameRoom() {
   }
 
   return (
-    <div className="container text-center" style={{ width: "280vh", maxWidth:'1650px' }}>
+    <div
+      className="container text-center"
+      style={{ width: "280vh", maxWidth: "1650px" }}
+    >
       <div className="container vh-120 d-flex justify-content-center align-items-center">
         <div
           className="p-5 text-center"
@@ -109,7 +112,9 @@ export default function GameRoom() {
               </button>
             ))}
           </div>
-          {gameStarted && !move && <h3 className="mt-5">Sedang menunggu gerakan...</h3>}
+          {gameStarted && !move && (
+            <h3 className="mt-5">Sedang menunggu gerakan...</h3>
+          )}
         </div>
       </div>
 
@@ -118,7 +123,21 @@ export default function GameRoom() {
           <Modal.Title>Hasil Game</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          <h5 className="text-center p-4" style={{fontSize:'60px', color:'ForestGreen'}}>{result?.result}</h5>
+          <h5
+            className="text-center p-4"
+            style={{
+              fontSize: "60px",
+              color: result?.message[username] === "You win!" ? "black" : "red", // Change color based on result
+            }}
+          >
+            {result?.message[username]}{" "}
+          </h5>
+          <h5
+            className="text-center p-4"
+            style={{ fontSize: "60px", color: "ForestGreen" }}
+          >
+            {result?.result}
+          </h5>
           <p className="text-center">Gerakan Anda: {result?.move1}</p>
           <p className="text-center">Gerakan Lawan: {result?.move2}</p>
         </Modal.Body>
