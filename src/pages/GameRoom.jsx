@@ -47,12 +47,17 @@ export default function GameRoom() {
       setShowModal(true);
     };
     socket.on("round-result", handleRoundResult);
-    console.log(result);
+
+    const handleOpponentDisconnect = () => {
+      setWaiting(true);
+    };
+    socket.on("opponent-disconnected", handleOpponentDisconnect);
 
     return () => {
       socket.off("waiting-opponent", handleWaitingOpponent);
       socket.off("start-game", handleStartGame);
       socket.off("round-result", handleRoundResult);
+      socket.off("opponent-disconnected", handleOpponentDisconnect);
       socket.disconnect();
     };
   }, [roomId, username]);
@@ -72,7 +77,7 @@ export default function GameRoom() {
 
   if (waiting) {
     return (
-      <div 
+      <div
         className="container text-center d-flex align-items-center"
         style={{ width: "100vw", height: "80vh" }}
       >
@@ -155,7 +160,9 @@ export default function GameRoom() {
             {result?.result}
           </h5>
           <p className="text-center">Your gesture: {result?.move1}</p>
-          <p className="text-center">Gesture {username}: {result?.move2}</p>
+          <p className="text-center">
+            Gesture {username}: {result?.move2}
+          </p>
         </Modal.Body>
         <Modal.Footer>
           <button className="btn btn-secondary" onClick={handleCloseModal}>
