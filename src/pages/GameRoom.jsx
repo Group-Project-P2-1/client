@@ -42,8 +42,25 @@ export default function GameRoom() {
     };
     socket.on("start-game", handleStartGame);
 
-    const handleRoundResult = (data) => {
-      setResult(data);
+    const handleRoundResult = ({
+      result,
+      move1,
+      move2,
+      message,
+      username1,
+      username2,
+    }) => {
+      const isPlayer1 = username === username1;
+      const userGesture = isPlayer1 ? move1 : move2;
+      const opponentGesture = isPlayer1 ? move2 : move1;
+      const opponentUsername = isPlayer1 ? username2 : username1;
+      setResult({
+        result,
+        userGesture,
+        opponentGesture,
+        message,
+        opponentUsername,
+      });
       setShowModal(true);
     };
     socket.on("round-result", handleRoundResult);
@@ -74,7 +91,7 @@ export default function GameRoom() {
     setMove("");
     setResult(null);
   };
-
+  console.log(result);
   if (waiting) {
     return (
       <div
@@ -159,9 +176,9 @@ export default function GameRoom() {
           >
             {result?.result}
           </h5>
-          <p className="text-center">Your gesture: {result?.move1}</p>
+          <p className="text-center">Your gesture: {result?.userGesture}</p>
           <p className="text-center">
-            Gesture {username}: {result?.move2}
+            Gesture {result?.opponentUsername} : {result?.opponentGesture}
           </p>
         </Modal.Body>
         <Modal.Footer>
